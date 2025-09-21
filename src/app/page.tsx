@@ -1,103 +1,120 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [city, setCity] = useState("");
+  const [weather, setWeather] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const getWeather = async () => {
+    if (!city.trim()) return;
+    setLoading(true);
+    setError("");
+    setWeather(null);
+
+    try {
+      // <- Make sure your Laravel backend is running at this address
+      const res = await fetch(`http://127.0.0.1:8000/api/weather/${encodeURIComponent(city)}`);
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || "City not found");
+      }
+      const data = await res.json();
+      setWeather(data);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Failed to fetch");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <main className="app-center">
+      <motion.div
+        className="w-full max-w-2xl card p-6 md:p-8"
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.45 }}
+      >
+        <div className="mb-4 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">🌦 Weather App</h1>
+          <p className="text-sm text-white/80 mt-1">Search any city — powered by  Laravel backend</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Search bar: input + button combined (rounded) */}
+        <div className="flex justify-center mt-8">
+          <div className="flex items-center bg-white rounded-full shadow-lg overflow-hidden w-1">
+            <input
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && getWeather()}
+              placeholder="Enter city (e.g., Delhi)"
+              className="flex-1  px-4 py-3 text-gray-700 text-base focus:outline-none"
+            />
+            <button
+              onClick={getWeather}
+              className="bg-blue-100 text-white px-6 py-3 font-medium hover:bg-blue-100 transition-colors"
+            >
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.6)" strokeWidth="4" />
+                    <path d="M22 12a10 10 0 00-10-10" stroke="#fff" strokeWidth="4" strokeLinecap="round" />
+                  </svg>
+                  Searching...
+                </span>
+              ) : (
+                <span>Search</span>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Error */}
+        {error && <p className="mt-4 text-sm text-red-300">{error}</p>}
+
+        {/* Weather card */}
+        {weather && weather.main && (
+          <motion.div
+            initial={{ y: 16, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.12, duration: 0.45 }}
+            className="mt-6 rounded-2xl bg-white/10 p-6 backdrop-blur-md"
+          >
+            <div className="flex items-center justify-center">
+              <div>
+                <h2 className="text-2xl font-bold ">{weather.name}{weather.sys?.country ? `, ${weather.sys.country}` : ""}</h2>
+                <p className="text-sm text-white/80 capitalize ">{weather.weather?.[0]?.description}</p>
+              </div>
+
+              {/* icon from openweathermap (optional) */}
+              {weather.weather?.[0]?.icon && (
+                <img
+                  src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                  alt="icon"
+                  className="w-20 h-20"
+                />
+              )}
+            </div>
+
+         
+             
+              <div className="flex justify-center mt-8">
+    <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-lg p-6 w-full max-w-md text-center">
+      <h2 className="text-2xl font-semibold mb-4">{weather.name}</h2>
+      <p className="text-lg">🌡 Temp: {weather.main.temp}°C</p>
+      <p className="text-lg">💧 Humidity: {weather.main.humidity}%</p>
+      <p className="text-lg">🌬 Wind: {weather.wind.speed} m/s</p>
     </div>
+
+            </div>
+          </motion.div>
+        )}
+      </motion.div>
+    </main>
   );
 }

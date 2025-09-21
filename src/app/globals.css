@@ -1,26 +1,63 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Make sure the app fills the viewport */
+html, body, #__next {
+  height: 100%;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Body: background photo with soft gradient overlay + smoothing */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, "Noto Sans", "Segoe UI Emoji";
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* gradient overlay first, then background image from public/bg-weather.jpg */
+  background-image:
+    linear-gradient(180deg, rgba(2,6,23,0.45), rgba(99,102,241,0.22)),
+    url("/bg-weather.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
+
+/* small helper so content never touches top-left */
+.app-center {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Glass card */
+.card {
+  background-color: rgba(255,255,255,0.08); /* subtle glass */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.45);
+}
+
+/* Input base */
+.search-input {
+  background: rgba(255,255,255,0.95);
+  color: #0b1220;
+}
+
+/* Button base */
+.search-btn {
+  background: linear-gradient(90deg,#4f46e5,#6366f1);
+  color: #fff;
+}
+
+/* small responsive tweaks */
+@media (max-width: 640px) {
+  .card { padding: 1rem; }
+}
+
