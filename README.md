@@ -1,60 +1,104 @@
+# 🌦 Weather-Updates (Next.js Full Stack App)
 
-
-# 🚀 Bill Buddy – Subscription Management System
-
-Bill Buddy is a full-stack MERN application designed to help users efficiently track and manage their recurring digital subscriptions. The platform provides secure authentication, automated reminders, and an interactive dashboard for better financial awareness.
+Weather-Updates is a modern full-stack weather application built using Next.js.  
+The application fetches real-time weather data through secure server-side API routes and displays it in a clean and responsive interface.
 
 ---
 
-## 📌 Features
+## 📌 About The Project
 
-- 🔐 Secure JWT-based Authentication (Login / Signup)
-- ➕ Add, Edit & Delete Subscriptions
-- ⏰ Automated Renewal Reminders using Cron Jobs
-- 📊 Interactive Dashboard with Subscription Insights
-- 📱 Fully Responsive UI (Mobile + Desktop)
-- 🛡 Protected Routes & Secure REST APIs
+This project was developed to understand:
+
+- Next.js App Router architecture
+- API Routes in Next.js
+- Server-side data handling
+- Environment variable security
+- Full-stack deployment using Vercel
+
+Instead of exposing the weather API key on the frontend, requests are handled securely through Next.js backend routes.
+
+---
+
+## 🚀 Live Demo
+
+🔗 Add your deployed Vercel link here
 
 ---
 
 ## 🛠 Tech Stack
 
-### Frontend
-- React.js
-- Tailwind CSS
-- Axios
-
-### Backend
-- Node.js
-- Express.js
-- REST API Architecture
-
-### Database
-- MongoDB
-- Mongoose ODM
-
-### Other Tools
-- JWT Authentication
-- Cron Jobs
-- Git & GitHub
-- Postman
+- Next.js (App Router)
+- TypeScript
+- CSS / Tailwind (if used)
+- Server-side API routes
+- External Weather API
 
 ---
 
-## 📂 Project Structure
+## ✨ Features
 
-Bill_Buddy/
+- 🔍 Search weather by city name
+- 🌡 Real-time temperature display
+- 💧 Humidity & wind speed information
+- 🔐 Secure API key handling (server-side)
+- ⚡ Fast performance with Next.js
+- 📱 Fully responsive design
+- ⚠ Error handling for invalid cities
+
+---
+
+## 🧠 How It Works
+
+1. User enters city name
+2. Frontend sends request to `/api/weather`
+3. Next.js API route fetches data from external Weather API
+4. Data is processed server-side
+5. JSON response sent back to frontend
+6. UI updates dynamically
+
+---
+
+## 📁 Project Structure
+
+Weather-Updates/
 │
-├── client/ # Frontend (React)
-├── server/ # Backend (Node + Express)
-├── models/ # Database Schemas
-├── routes/ # API Routes
-└── controllers/ # Business Logic
+├── client/
+│ ├── index.html
+│ ├── style.css
+│ └── script.js
+│
+├── server/
+│ ├── server.js
+│ └── routes/
+│
+├── .env
+├── package.json
+└── README.md
 
+---
 
-## ⚙️ Installation & Setup
+## 🌍 Deployment
 
-### 1️⃣ Clone the repository
+This project is optimized for deployment on:
 
-```bash
-git clone https://github.com/Ayushkumar00111/Bill_Buddy.git
+- Vercel
+
+Simply connect your GitHub repository and add environment variables in the dashboard.
+
+---
+
+## 🔮 Future Improvements
+
+- Add 5-day forecast feature
+- Add dark/light mode toggle
+- Add location auto-detection
+- Add loading animations & skeleton UI
+
+---
+
+## 👨‍💻 Author
+
+Ayush Kumar  
+Final-Year B.Tech Computer Science Student  
+MERN Stack & Next.js Developer
+
