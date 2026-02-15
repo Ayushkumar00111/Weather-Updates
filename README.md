@@ -98,4 +98,5 @@ Simply connect your GitHub repository and add environment variables in the dashb
 Ayush Kumar  
 Final-Year B.Tech Computer Science Student  
 MERN Stack & Next.js Developer
+2025
 
