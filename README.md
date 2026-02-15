@@ -1,4 +1,4 @@
-# 🌦 Weather-Updates (Next.js Full Stack App)
+<img width="1354" height="624" alt="image" src="https://github.com/user-attachments/assets/5a6435dc-f7b6-432f-92c3-f90392286c50" /># 🌦 Weather-Updates (Next.js Full Stack App)
 
 Weather-Updates is a modern full-stack weather application built using Next.js.  
 The application fetches real-time weather data through secure server-side API routes and displays it in a clean and responsive interface.
@@ -19,9 +19,6 @@ Instead of exposing the weather API key on the frontend, requests are handled se
 
 ---
 
-## 🚀 Live Demo
-
-🔗 Add your deployed Vercel link here
 
 ---
 
