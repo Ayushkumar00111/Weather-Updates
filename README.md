@@ -89,7 +89,7 @@ Simply connect your GitHub repository and add environment variables in the dashb
 - Add 5-day forecast feature
 - Add dark/light mode toggle
 - Add location auto-detection
-- Add loading animations & skeleton UI
+
 
 ---
 
